@@ -20,6 +20,21 @@
             --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.12);
         }
 
+        [data-theme="dark"] {
+            --bg-primary: #1c1c1e;
+            --bg-secondary: #2c2c2e;
+            --bg-tertiary: #3a3a3c;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989d;
+            --text-tertiary: #6e6e73;
+            --accent-blue: #409cff;
+            --accent-blue-hover: #0066cc;
+            --border-light: #38383a;
+            --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.3);
+            --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -56,6 +71,11 @@
             transition: all 0.3s ease;
         }
 
+        [data-theme="dark"] .nav {
+            background: rgba(28, 28, 30, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         .nav-inner {
             max-width: 980px;
             margin: 0 auto;
@@ -72,6 +92,46 @@
             color: var(--text-primary);
             text-decoration: none;
             letter-spacing: -0.01em;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-secondary);
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle .sun-icon {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-toggle .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .moon-icon {
+            display: none;
         }
 
         .nav-links {
@@ -100,6 +160,7 @@
 
         /* Hero Section */
         .hero {
+            position: relative;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -107,6 +168,39 @@
             justify-content: center;
             padding: 120px 20px 80px;
             text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.65) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        [data-theme="dark"] .hero-overlay {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0.8) 100%);
         }
 
         .avatar-wrapper {
@@ -121,7 +215,7 @@
 
         .avatar-wrapper:hover {
             transform: scale(1.03);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
         }
 
         .avatar {
@@ -138,7 +232,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
@@ -153,30 +247,33 @@
             line-height: 1.03572;
             font-weight: 600;
             letter-spacing: -0.005em;
-            color: var(--text-primary);
+            color: #ffffff;
             margin-bottom: 16px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
         .hero .subtitle {
             font-size: 21px;
             line-height: 1.381;
             font-weight: 400;
-            color: var(--text-secondary);
+            color: #f0f0f0;
             max-width: 600px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .scroll-indicator {
             position: absolute;
-            bottom: 40px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
+            opacity: 0.8;
         }
 
         .scroll-indicator svg {
             width: 24px;
             height: 24px;
-            color: var(--text-tertiary);
+            color: #ffffff;
         }
 
         @keyframes bounce {
@@ -505,24 +602,40 @@
     <nav class="nav">
         <div class="nav-inner">
             <a href="#" class="nav-brand">郭津硕</a>
-            <ul class="nav-links">
-                <li><a href="#education">Education · 教育</a></li>
-                <li><a href="#research">Research · 研究</a></li>
-                <li><a href="#skills">Skills · 技能</a></li>
-                <li><a href="#contact">Contact · 联系</a></li>
-            </ul>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <ul class="nav-links" style="display: flex; gap: 24px;">
+                    <li><a href="#education">Education · 教育</a></li>
+                    <li><a href="#research">Research · 研究</a></li>
+                    <li><a href="#skills">Skills · 技能</a></li>
+                    <li><a href="#contact">Contact · 联系</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     </nav>
 
     <main>
         <section class="hero">
+            <div class="hero-bg">
+                <img src="avatar.jpg" alt="Guo Jinshuo">
+            </div>
+            <div class="hero-overlay"></div>
             <div class="avatar-wrapper">
                 <img src="avatar.jpg" alt="Guo Jinshuo" class="avatar">
                 <div class="avatar-overlay"></div>
             </div>
             <h1>Guo Jinshuo</h1>
+            <p class="subtitle" style="font-size: 24px; margin-bottom: 4px;">郭津硕</p>
             <p class="subtitle">Shenzhen Technology University · AI & Embodied Intelligence</p>
-            <p class="subtitle" style="font-size: 17px; margin-top: 10px; color: var(--text-tertiary);">深圳技术大学 · 人工智能与具身智能</p>
+            <p class="subtitle" style="font-size: 17px; margin-top: 10px; color: #d0d0d0;">深圳技术大学 · 人工智能与具身智能</p>
             <div class="scroll-indicator">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 5v14M5 12l7 7 7-7"/>
@@ -662,16 +775,30 @@
 
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             if (currentScroll > 50) {
-                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.background = isDark ? 'rgba(28, 28, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)';
             } else {
-                nav.style.background = 'rgba(255, 255, 255, 0.8)';
+                nav.style.background = isDark ? 'rgba(28, 28, 30, 0.8)' : 'rgba(255, 255, 255, 0.8)';
             }
             lastScroll = currentScroll;
         });
 
+        // Update nav theme when theme changes
+        const themeObserver = new MutationObserver(() => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 50) {
+                nav.style.background = isDark ? 'rgba(28, 28, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+            } else {
+                nav.style.background = isDark ? 'rgba(28, 28, 30, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+            }
+        });
+
+        themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
         // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
+        const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animated');
@@ -683,7 +810,7 @@
         });
 
         document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
+            scrollObserver.observe(el);
         });
 
         // Back to top button
@@ -716,6 +843,25 @@
                     });
                 }
             });
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        // Load saved theme or prefer dark scheme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.setAttribute('data-theme', 'dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
         });
     </script>
 </body>
