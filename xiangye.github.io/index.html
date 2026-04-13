@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郭津硕 Guo Jinshuo - Personal Portfolio</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-tertiary: #e8e8ed;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-tertiary: #86868b;
+            --accent-blue: #0066cc;
+            --accent-blue-hover: #004499;
+            --border-light: #d2d2d7;
+            --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-weight: 400;
+            letter-spacing: -0.011em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 80px;
+            text-align: center;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 32px;
+            border-radius: 50%;
+            box-shadow: var(--shadow-large);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+        }
+
+        .avatar-wrapper:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .avatar-wrapper:hover .avatar-overlay {
+            opacity: 1;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.03572;
+            font-weight: 600;
+            letter-spacing: -0.005em;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .hero .subtitle {
+            font-size: 21px;
+            line-height: 1.381;
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-tertiary);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-8px); }
+            60% { transform: translateX(-50%) translateY(-4px); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 40px;
+            line-height: 1.1;
+            font-weight: 600;
+            letter-spacing: -0.003em;
+            color: var(--text-primary);
+        }
+
+        .section-description {
+            font-size: 17px;
+            line-height: 1.47059;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        /* Education */
+        #education {
+            background: var(--bg-primary);
+        }
+
+        .education-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .education-item {
+            font-size: 19px;
+            line-height: 1.42108;
+            color: var(--text-primary);
+            padding: 28px 32px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .education-item:hover {
+            background: var(--bg-tertiary);
+            transform: translateX(8px);
+        }
+
+        .education-item strong {
+            font-weight: 600;
+        }
+
+        .education-item span {
+            color: var(--text-secondary);
+        }
+
+        /* Research */
+        #research {
+            background: var(--bg-secondary);
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .research-item {
+            padding: 40px 32px;
+            background: var(--bg-primary);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+        }
+
+        .research-item:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--shadow-large);
+        }
+
+        .research-item .title {
+            font-size: 21px;
+            line-height: 1.28577;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .research-item .subtitle {
+            font-size: 15px;
+            line-height: 1.33337;
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+
+        /* Skills */
+        #skills {
+            background: var(--bg-primary);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .skill-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .skill-label {
+            font-size: 13px;
+            line-height: 1.38462;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-item {
+            font-size: 15px;
+            line-height: 1.33333;
+            color: var(--text-primary);
+            padding: 10px 18px;
+            background: var(--bg-secondary);
+            border-radius: 100px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .skill-item:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        /* Contact */
+        #contact {
+            background: var(--bg-secondary);
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 17px;
+            line-height: 1.47059;
+            color: var(--accent-blue);
+            padding: 18px 28px;
+            background: var(--bg-primary);
+            border: none;
+            border-radius: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-item:hover {
+            background: var(--accent-blue);
+            color: var(--bg-primary);
+            transform: scale(1.02);
+        }
+
+        .contact-item.location {
+            color: var(--text-secondary);
+            cursor: default;
+        }
+
+        .contact-item.location:hover {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            transform: none;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 32px 0;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-right {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .footer-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .footer-top:hover {
+            background: var(--text-secondary);
+        }
+
+        .footer-top svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 734px) {
+            .nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero .subtitle {
+                font-size: 17px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .skills-container {
+                flex-direction: column;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-brand">郭津硕</a>
+            <ul class="nav-links">
+                <li><a href="#education">Education · 教育</a></li>
+                <li><a href="#research">Research · 研究</a></li>
+                <li><a href="#skills">Skills · 技能</a></li>
+                <li><a href="#contact">Contact · 联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="avatar-wrapper">
+                <img src="avatar.jpg" alt="Guo Jinshuo" class="avatar">
+                <div class="avatar-overlay"></div>
+            </div>
+            <h1>Guo Jinshuo</h1>
+            <p class="subtitle">Shenzhen Technology University · AI & Embodied Intelligence</p>
+            <p class="subtitle" style="font-size: 17px; margin-top: 10px; color: var(--text-tertiary);">深圳技术大学 · 人工智能与具身智能</p>
+            <div class="scroll-indicator">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7 7 7-7"/>
+                </svg>
+            </div>
+        </section>
+
+        <section id="education" class="animate-on-scroll">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Education</h2>
+                    <p class="section-description">教育背景</p>
+                </div>
+                <div class="education-list">
+                    <div class="education-item">
+                        <strong>Shenzhen Technology University</strong> <span>· Bachelor · 2025-2029</span>
+                        <div style="font-size: 15px; color: var(--text-tertiary); margin-top: 4px;">深圳技术大学 · 本科</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="research" class="animate-on-scroll">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Research Interests</h2>
+                    <p class="section-description">探索视觉与语言的边界，推动智能体与真实世界的交互</p>
+                </div>
+                <div class="research-grid">
+                    <div class="research-item">
+                        <div class="title">Computer Vision</div>
+                        <div class="subtitle">计算机视觉</div>
+                    </div>
+                    <div class="research-item">
+                        <div class="title">Vision-Language-Action Models</div>
+                        <div class="subtitle">视觉 - 语言 - 动作模型</div>
+                    </div>
+                    <div class="research-item">
+                        <div class="title">Sim2Real Transfer</div>
+                        <div class="subtitle">仿真到真实迁移</div>
+                    </div>
+                    <div class="research-item">
+                        <div class="title">Embodied AI</div>
+                        <div class="subtitle">具身智能</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="animate-on-scroll">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Technical Skills</h2>
+                    <p class="section-description" style="margin-top: 12px;">技术技能</p>
+                </div>
+                <div class="skills-container">
+                    <div class="skill-group">
+                        <div class="skill-label">Programming · 编程语言</div>
+                        <div class="skill-list">
+                            <span class="skill-item">Python</span>
+                            <span class="skill-item">C++</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <div class="skill-label">Machine Learning · 机器学习</div>
+                        <div class="skill-list">
+                            <span class="skill-item">PyTorch</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <div class="skill-label">Robotics · 机器人</div>
+                        <div class="skill-list">
+                            <span class="skill-item">ROS</span>
+                            <span class="skill-item">Motion Control · 运动控制</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="animate-on-scroll">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Contact</h2>
+                    <p class="section-description" style="margin-top: 12px;">联系方式</p>
+                </div>
+                <div class="contact-list">
+                    <a href="mailto:gjs070219@qq.com" class="contact-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        gjs070219@qq.com
+                    </a>
+                    <a href="https://github.com/jinshuoguo" target="_blank" rel="noopener noreferrer" class="contact-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        jinshuoguo
+                    </a>
+                    <div class="contact-item location">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Shenzhen, China · 深圳，中国
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">&copy; 2026 Guo Jinshuo</div>
+            <div class="footer-right">Designed with simplicity</div>
+        </div>
+    </footer>
+
+    <button class="footer-top" id="scrollTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.querySelector('.nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.8)';
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Back to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 400) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scroll navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
